@@ -3,7 +3,7 @@ use gpui::{
     SystemMenuType, Window, WindowOptions, actions, div, font, prelude::*, px, relative, rgb,
 };
 use gpui_component::{
-    ActiveTheme as _, Icon, IconName, StyledExt, Theme, h_flex,
+    ActiveTheme as _, Icon, IconName, StyledExt, Theme, ThemeMode, h_flex,
     input::{InputEvent, InputState, TextInput},
     resizable::{ResizableState, h_resizable, resizable_panel},
     sidebar::{Sidebar, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuItem},
@@ -212,8 +212,10 @@ fn main() {
     app.run(|cx: &mut App| {
         gpui_component::init(cx);
         cx.activate(true);
+        Theme::change(ThemeMode::Dark, None, cx);
+        Theme::global_mut(cx).set_default_dark();
         Theme::global_mut(cx).font_family = "Space Grotesk".into();
-        Theme::global_mut(cx).font_size = px(16.);
+        Theme::global_mut(cx).font_size = px(17.);
         utools::create_new_window(
             "μTools",
             move |window, cx| Gallery::view(name.as_deref(), window, cx),

@@ -54,6 +54,8 @@ where
 
         let window = cx
             .open_window(options, |window, cx| {
+                window.set_rem_size(cx.theme().font_size);
+
                 let view = crate_view_fn(window, cx);
                 let root = cx.new(|cx| ToolRoot::new(title.clone(), view, window, cx));
 
@@ -97,7 +99,6 @@ impl Render for ToolRoot {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         div()
             .font_family(cx.theme().font_family.clone())
-            .font_normal()
             .size_full()
             .child(
                 v_flex()
