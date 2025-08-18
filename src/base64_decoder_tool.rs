@@ -32,8 +32,8 @@ impl Base64DecoderTool {
     fn new(window: &mut Window, cx: &mut Context<Self>) -> Self {
         let editor = cx.new(|cx| {
             InputState::new(window, cx)
-                .code_editor(Language::Json.name().to_string())
-                .line_number(true)
+                .code_editor(Language::Plain.name().to_string())
+                .line_number(false)
                 .tab_size(TabSize {
                     tab_size: 4,
                     hard_tabs: false,
@@ -43,8 +43,8 @@ impl Base64DecoderTool {
         });
         let decoded = cx.new(|cx| {
             InputState::new(window, cx)
-                .code_editor(Language::Json.name().to_string())
-                .line_number(true)
+                .code_editor(Language::Plain.name().to_string())
+                .line_number(false)
                 .tab_size(TabSize {
                     tab_size: 4,
                     hard_tabs: false,
