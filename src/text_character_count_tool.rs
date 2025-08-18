@@ -135,7 +135,6 @@ impl Render for TextCharacterCountTool {
             .child(
                 v_flex().id("source").w_full().flex_1().gap_2().child(
                     TextInput::new(&self.editor)
-                        .bordered(false)
                         .h_full()
                         .font_family("Space Mono")
                         .text_size(px(15.))
