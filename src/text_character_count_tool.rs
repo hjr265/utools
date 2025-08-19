@@ -1,14 +1,14 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
     Action, App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
-    InteractiveElement, ParentElement, Render, SharedString, Styled, Window, div, px,
+    InteractiveElement, ParentElement, Render, SharedString, Styled, Subscription, Window, div, px,
 };
 
 use gpui_component::{
     Disableable, button::Button, button::ButtonVariants, button::DropdownButton,
-    clipboard::Clipboard, dock::PanelControl, h_flex, highlighter::Language, input::InputState,
-    input::TabSize, input::TextInput, label::Label, popup_menu::PopupMenuExt, text::TextView,
-    v_flex,
+    clipboard::Clipboard, dock::PanelControl, h_flex, highlighter::Language, input::InputEvent,
+    input::InputState, input::TabSize, input::TextInput, label::Label, popup_menu::PopupMenuExt,
+    text::TextView, v_flex,
 };
 
 use serde::Deserialize;
@@ -21,6 +21,7 @@ pub struct TextCharacterCountTool {
     focus_handle: FocusHandle,
     editor: Entity<InputState>,
     character_count: usize,
+    _subscriptions: Vec<Subscription>,
 }
 
 impl TextCharacterCountTool {
@@ -35,11 +36,21 @@ impl TextCharacterCountTool {
                 .default_value("")
                 .placeholder("Text")
         });
+        let _subscriptions = vec![cx.subscribe(&editor, |this, _, e, cx| match e {
+            InputEvent::Change(_) => {
+                if this.character_count > 0 {
+                    this.character_count = 0;
+                    cx.notify()
+                }
+            }
+            _ => {}
+        })];
 
         Self {
             focus_handle: cx.focus_handle(),
-            editor: editor,
+            editor,
             character_count: 0,
+            _subscriptions,
         }
     }
 
@@ -52,7 +63,6 @@ impl TextCharacterCountTool {
     fn on_copy_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
         let value = self.editor.read(cx).value().clone();
         cx.write_to_clipboard(ClipboardItem::new_string(value.to_string()));
-        println!("{}", value.to_string());
     }
 
     fn on_paste_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
