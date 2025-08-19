@@ -6,8 +6,11 @@ use gpui::{
 };
 
 use gpui_component::{
-    Disableable, StyledExt, button::Button, h_flex, highlighter::Language, input::InputState,
-    input::TabSize, input::TextInput,
+    Disableable, StyledExt,
+    button::{Button, ButtonVariants},
+    h_flex,
+    highlighter::Language,
+    input::{InputState, TabSize, TextInput},
 };
 
 use crate::Tool;
@@ -143,6 +146,7 @@ impl Render for Base64EncoderTool {
                     .child(
                         Button::new("encode-button")
                             .label("Encode")
+                            .primary()
                             .disabled(value.is_empty())
                             .on_click(cx.listener(Self::on_encode_click)),
                     )

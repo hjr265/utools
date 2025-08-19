@@ -5,7 +5,7 @@ use gpui::{
 
 use gpui_component::{
     Disableable, StyledExt,
-    button::Button,
+    button::{Button, ButtonVariants},
     h_flex,
     highlighter::Language,
     input::{InputState, TabSize, TextInput},
@@ -106,6 +106,7 @@ impl Render for JSONViewerTool {
                     .child(
                         Button::new("view-button")
                             .label(if self.view_mode { "Back" } else { "View" })
+                            .primary()
                             .disabled(value.is_empty())
                             .on_click(cx.listener(Self::on_view_click)),
                     )

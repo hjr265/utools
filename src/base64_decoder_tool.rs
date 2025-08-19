@@ -5,9 +5,13 @@ use gpui::{
     ParentElement, Render, SharedString, Styled, Window, div, px,
 };
 
-use gpui_component::StyledExt;
 use gpui_component::{
-    Disableable, button::Button, h_flex, highlighter::Language, input::InputState, input::TabSize,
+    Disableable, StyledExt,
+    button::{Button, ButtonVariants},
+    h_flex,
+    highlighter::Language,
+    input::InputState,
+    input::TabSize,
     input::TextInput,
 };
 
@@ -151,6 +155,7 @@ impl Render for Base64DecoderTool {
                     .child(
                         Button::new("decode-button")
                             .label("Decode")
+                            .primary()
                             .disabled(value.is_empty())
                             .on_click(cx.listener(Self::on_decode_click)),
                     )

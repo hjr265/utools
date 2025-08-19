@@ -5,8 +5,14 @@ use gpui::{
 };
 
 use gpui_component::{
-    button::Button, clipboard::Clipboard, h_flex, input::InputEvent, input::InputState,
-    input::TextInput, label::Label, v_flex,
+    button::{Button, ButtonVariants},
+    clipboard::Clipboard,
+    h_flex,
+    input::InputEvent,
+    input::InputState,
+    input::TextInput,
+    label::Label,
+    v_flex,
 };
 
 use crate::Tool;
@@ -110,6 +116,7 @@ impl Render for TextCharacterCountTool {
                     .child(
                         Button::new("count-button")
                             .label("Count")
+                            .primary()
                             .on_click(cx.listener(Self::on_count_click)),
                     )
                     .child(div().px_4().when(character_count > 0, |this| {
