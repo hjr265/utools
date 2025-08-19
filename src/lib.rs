@@ -8,12 +8,12 @@ mod title_bar;
 
 pub use assets::Assets;
 use gpui::{
-    AnyView, App, AppContext, Bounds, Context, Entity, Focusable, FontWeight, InteractiveElement,
-    IntoElement, Render, SharedString, StatefulInteractiveElement, Styled, Window, WindowBounds,
-    WindowKind, WindowOptions, div, prelude::*, px, size,
+    AnyView, App, AppContext, Bounds, Context, Entity, Focusable, InteractiveElement, IntoElement,
+    Render, SharedString, StatefulInteractiveElement, Styled, Window, WindowBounds, WindowKind,
+    WindowOptions, div, prelude::*, px, size,
 };
 
-use gpui_component::{ActiveTheme, Root, StyledExt, TitleBar, theme, v_flex};
+use gpui_component::{ActiveTheme, Root, TitleBar, v_flex};
 
 pub use base64_decoder_tool::Base64DecoderTool;
 pub use base64_encoder_tool::Base64EncoderTool;
@@ -96,7 +96,7 @@ impl ToolRoot {
 }
 
 impl Render for ToolRoot {
-    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         div()
             .font_family(cx.theme().font_family.clone())
             .size_full()
@@ -201,7 +201,7 @@ impl Focusable for ToolContainer {
 }
 
 impl Render for ToolContainer {
-    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, _: &mut Window, _: &mut Context<Self>) -> impl IntoElement {
         v_flex()
             .id("tool-container")
             .size_full()

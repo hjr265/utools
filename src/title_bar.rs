@@ -1,19 +1,10 @@
 use std::rc::Rc;
 
 use gpui::{
-    AnyElement, App, AppContext, ClickEvent, Context, Corner, Entity, FocusHandle,
-    InteractiveElement as _, IntoElement, MouseButton, ParentElement as _, Render, SharedString,
-    Styled as _, Subscription, Window, div, prelude::FluentBuilder as _, px,
+    AnyElement, App, Context, InteractiveElement as _, IntoElement, MouseButton,
+    ParentElement as _, Render, SharedString, Styled as _, Subscription, Window, div,
 };
-use gpui_component::{
-    ActiveTheme as _, ContextModal as _, IconName, Sizable as _, Theme, ThemeMode, TitleBar,
-    badge::Badge,
-    button::{Button, ButtonVariants as _},
-    locale,
-    popup_menu::PopupMenuExt as _,
-    scroll::ScrollbarShow,
-    set_locale,
-};
+use gpui_component::TitleBar;
 
 // use crate::{SelectFont, SelectLocale, SelectRadius, SelectScrollbarShow, themes::ThemeSwitcher};
 
@@ -29,8 +20,8 @@ pub struct AppTitleBar {
 impl AppTitleBar {
     pub fn new(
         title: impl Into<SharedString>,
-        window: &mut Window,
-        cx: &mut Context<Self>,
+        _window: &mut Window,
+        _cx: &mut Context<Self>,
     ) -> Self {
         // let locale_selector = cx.new(|cx| LocaleSelector::new(window, cx));
         // let font_size_selector = cx.new(|cx| FontSizeSelector::new(window, cx));
@@ -62,14 +53,14 @@ impl AppTitleBar {
         self
     }
 
-    fn change_color_mode(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
-        let mode = match cx.theme().mode.is_dark() {
-            true => ThemeMode::Light,
-            false => ThemeMode::Dark,
-        };
+    // fn change_color_mode(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
+    //     let mode = match cx.theme().mode.is_dark() {
+    //         true => ThemeMode::Light,
+    //         false => ThemeMode::Dark,
+    //     };
 
-        Theme::change(mode, None, cx);
-    }
+    //     Theme::change(mode, None, cx);
+    // }
 }
 
 impl Render for AppTitleBar {

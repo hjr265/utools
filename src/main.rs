@@ -1,13 +1,12 @@
 use gpui::{
-    App, Application, ClickEvent, Context, Entity, Font, Menu, MenuItem, SharedString,
-    Subscription, SystemMenuType, Window, WindowOptions, actions, div, font, prelude::*, px,
-    relative, rgb,
+    App, Application, ClickEvent, Context, Entity, Subscription, Window, actions, div, prelude::*,
+    px, relative,
 };
 use gpui_component::{
-    ActiveTheme as _, Icon, IconName, StyledExt, Theme, ThemeMode, h_flex,
+    ActiveTheme as _, Theme, ThemeMode, h_flex,
     input::{InputEvent, InputState, TextInput},
     resizable::{ResizableState, h_resizable, resizable_panel},
-    sidebar::{Sidebar, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuItem},
+    sidebar::{Sidebar, SidebarGroup, SidebarMenu, SidebarMenuItem},
     v_flex,
 };
 
@@ -231,7 +230,7 @@ fn main() {
 actions!(set_menus, [Quit]);
 
 // Define the quit function that is registered with the App
-fn quit(_: &Quit, cx: &mut App) {
-    println!("Gracefully quitting the application . . .");
-    cx.quit();
-}
+// fn quit(_: &Quit, cx: &mut App) {
+//     println!("Gracefully quitting the application . . .");
+//     cx.quit();
+// }

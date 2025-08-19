@@ -1,19 +1,14 @@
 use base64::{Engine as _, engine::general_purpose};
 
 use gpui::{
-    Action, App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
-    InteractiveElement, ParentElement, Render, SharedString, Styled, Window, div, px,
+    App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
+    ParentElement, Render, SharedString, Styled, Window, div, px,
 };
 
 use gpui_component::{
-    ActiveTheme, Disableable, StyledExt, button::Button, button::ButtonVariants,
-    button::DropdownButton, dock::PanelControl, h_flex, highlighter::Language, input::InputState,
-    input::TabSize, input::TextInput, popup_menu::PopupMenuExt, text::TextView, v_flex,
+    Disableable, StyledExt, button::Button, h_flex, highlighter::Language, input::InputState,
+    input::TabSize, input::TextInput,
 };
-
-use serde::{Deserialize, Serialize};
-use serde_json::ser::{PrettyFormatter, Serializer};
-use serde_json::{Value, json, to_writer_pretty};
 
 use crate::Tool;
 
@@ -67,7 +62,7 @@ impl Base64EncoderTool {
         })
     }
 
-    fn on_copy_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
+    fn on_copy_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
         let value = self.editor.read(cx).value().clone();
         cx.write_to_clipboard(ClipboardItem::new_string(value.to_string()));
     }
@@ -84,7 +79,7 @@ impl Base64EncoderTool {
     fn on_copy_encoded_click(
         &mut self,
         _: &ClickEvent,
-        window: &mut Window,
+        _window: &mut Window,
         cx: &mut Context<Self>,
     ) {
         let value = self.encoded.read(cx).value().clone();

@@ -1,19 +1,13 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Action, App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
+    App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
     InteractiveElement, ParentElement, Render, SharedString, Styled, Subscription, Window, div, px,
 };
 
 use gpui_component::{
-    Disableable, button::Button, button::ButtonVariants, button::DropdownButton,
-    clipboard::Clipboard, dock::PanelControl, h_flex, highlighter::Language, input::InputEvent,
-    input::InputState, input::TabSize, input::TextInput, label::Label, popup_menu::PopupMenuExt,
-    text::TextView, v_flex,
+    button::Button, clipboard::Clipboard, h_flex, input::InputEvent, input::InputState,
+    input::TextInput, label::Label, v_flex,
 };
-
-use serde::Deserialize;
-use serde_json::ser::{PrettyFormatter, Serializer};
-use serde_json::{Value, json};
 
 use crate::Tool;
 
@@ -54,13 +48,13 @@ impl TextCharacterCountTool {
         }
     }
 
-    fn on_count_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
+    fn on_count_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
         let value = self.editor.read(cx).value().clone();
         self.character_count = value.len();
         cx.notify();
     }
 
-    fn on_copy_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
+    fn on_copy_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
         let value = self.editor.read(cx).value().clone();
         cx.write_to_clipboard(ClipboardItem::new_string(value.to_string()));
     }
@@ -125,8 +119,7 @@ impl Render for TextCharacterCountTool {
                                     Label::new(format!("{} characters", character_count))
                                 })
                                 .value_fn({
-                                    let view = cx.entity().clone();
-                                    move |_, cx| SharedString::from(format!("{}", character_count))
+                                    move |_, _| SharedString::from(format!("{}", character_count))
                                 }),
                         )
                     }))

@@ -5,14 +5,13 @@ use gpui::{
 
 use gpui_component::StyledExt;
 use gpui_component::{
-    Disableable, button::Button, button::ButtonVariants, button::DropdownButton,
-    dock::PanelControl, h_flex, highlighter::Language, input::InputState, input::TabSize,
-    input::TextInput, popup_menu::PopupMenuExt, text::TextView, v_flex,
+    Disableable, button::Button, button::ButtonVariants, button::DropdownButton, h_flex,
+    highlighter::Language, input::InputState, input::TabSize, input::TextInput,
 };
 
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use serde_json::ser::{PrettyFormatter, Serializer};
-use serde_json::{Value, json, to_writer_pretty};
 
 use crate::Tool;
 
@@ -74,7 +73,7 @@ impl JSONFormatterTool {
         })
     }
 
-    fn on_copy_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
+    fn on_copy_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
         let value = self.editor.read(cx).value().clone();
         cx.write_to_clipboard(ClipboardItem::new_string(value.to_string()));
     }

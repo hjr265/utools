@@ -1,19 +1,14 @@
-use std::ops::Not;
-
 use gpui::{
     App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
-    ParentElement, Render, SharedString, Styled, Window, div, prelude::FluentBuilder, px,
+    ParentElement, Render, Styled, Window, div, prelude::FluentBuilder, px,
 };
 
 use gpui_component::{
     Disableable, StyledExt,
     button::Button,
-    dock::PanelControl,
     h_flex,
     highlighter::Language,
     input::{InputState, TabSize, TextInput},
-    text::TextView,
-    v_flex,
 };
 
 use crate::Tool;
@@ -49,12 +44,12 @@ impl JSONViewerTool {
         }
     }
 
-    fn on_view_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
+    fn on_view_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
         self.view_mode = !self.view_mode;
         cx.notify();
     }
 
-    fn on_copy_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
+    fn on_copy_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
         let value = self.editor.read(cx).value().clone();
         cx.write_to_clipboard(ClipboardItem::new_string(value.to_string()));
     }
@@ -139,4 +134,4 @@ impl Render for JSONViewerTool {
     }
 }
 
-fn make_tree(value: SharedString) {}
+// fn make_tree(value: SharedString) {}
