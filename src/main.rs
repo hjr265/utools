@@ -1,6 +1,7 @@
 use gpui::{
     App, Application, ClickEvent, Context, Entity, Font, Menu, MenuItem, SharedString,
-    SystemMenuType, Window, WindowOptions, actions, div, font, prelude::*, px, relative, rgb,
+    Subscription, SystemMenuType, Window, WindowOptions, actions, div, font, prelude::*, px,
+    relative, rgb,
 };
 use gpui_component::{
     ActiveTheme as _, Icon, IconName, StyledExt, Theme, ThemeMode, h_flex,
@@ -19,12 +20,13 @@ struct Gallery {
     sidebar_collapsed: bool,
     search_input: Entity<InputState>,
     sidebar_state: Entity<ResizableState>,
+    _subscriptions: Vec<Subscription>,
 }
 
 impl Gallery {
     pub fn new(init_tool: Option<&str>, window: &mut Window, cx: &mut Context<Self>) -> Self {
         let search_input = cx.new(|cx| InputState::new(window, cx).placeholder("Search"));
-        let subscriptions = vec![cx.subscribe(&search_input, |this, _, e, cx| match e {
+        let _subscriptions = vec![cx.subscribe(&search_input, |this, _, e, cx| match e {
             InputEvent::Change(_) => {
                 this.active_group_index = Some(0);
                 this.active_index = Some(0);
@@ -60,6 +62,7 @@ impl Gallery {
             active_index: Some(0),
             sidebar_collapsed: false,
             sidebar_state: ResizableState::new(cx),
+            _subscriptions,
         };
 
         if let Some(init_tool) = init_tool {
