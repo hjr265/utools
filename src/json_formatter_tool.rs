@@ -22,7 +22,7 @@ pub struct SetIndentationSize(usize);
 pub struct JSONFormatterTool {
     focus_handle: FocusHandle,
     editor: Entity<InputState>,
-    indent_size: usize,
+    indentation_size: usize,
 }
 
 impl JSONFormatterTool {
@@ -46,7 +46,7 @@ impl JSONFormatterTool {
         Self {
             focus_handle: cx.focus_handle(),
             editor,
-            indent_size: 2,
+            indentation_size: 2,
         }
     }
 
@@ -54,7 +54,7 @@ impl JSONFormatterTool {
         self.editor.update(cx, |state, cx| {
             let value = state.value();
             let json_value: Value = serde_json::from_str(value).unwrap();
-            let indent = b" ".repeat(self.indent_size);
+            let indent = b" ".repeat(self.indentation_size);
             let formatter = PrettyFormatter::with_indent(indent.as_slice());
             let mut writer = Vec::with_capacity(128);
             let mut serializer = Serializer::with_formatter(&mut writer, formatter);
@@ -87,13 +87,13 @@ impl JSONFormatterTool {
         }
     }
 
-    fn on_action_set_indent_size(
+    fn on_action_set_indentation_size(
         &mut self,
         action: &SetIndentationSize,
         _: &mut Window,
         cx: &mut Context<Self>,
     ) {
-        self.indent_size = action.0;
+        self.indentation_size = action.0;
         cx.notify();
     }
 }
@@ -129,10 +129,10 @@ impl Render for JSONFormatterTool {
         cx: &mut gpui::Context<Self>,
     ) -> impl gpui::IntoElement {
         let value = self.editor.read(cx).value();
-        let indentation_size = self.indent_size;
+        let indentation_size = self.indentation_size;
 
         div()
-            .on_action(cx.listener(Self::on_action_set_indent_size))
+            .on_action(cx.listener(Self::on_action_set_indentation_size))
             .v_flex()
             .size_full()
             .gap_2()
