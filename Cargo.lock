@@ -6383,6 +6383,7 @@ dependencies = [
  "base64",
  "gpui",
  "gpui-component",
+ "percent-encoding",
  "rust-embed",
  "serde",
  "serde_json",

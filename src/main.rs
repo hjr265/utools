@@ -43,6 +43,10 @@ impl Gallery {
                 ],
             ),
             (
+                "Data URL",
+                vec![ToolContainer::panel::<DataURLGeneratorTool>(window, cx)],
+            ),
+            (
                 "JSON",
                 vec![
                     ToolContainer::panel::<JSONFormatterTool>(window, cx),

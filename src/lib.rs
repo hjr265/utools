@@ -1,6 +1,7 @@
 mod assets;
 mod base64_decoder_tool;
 mod base64_encoder_tool;
+mod data_url_generator_tool;
 mod json_formatter_tool;
 mod json_viewer_tool;
 mod text_character_count_tool;
@@ -17,6 +18,7 @@ use gpui_component::{ActiveTheme, Root, TitleBar, v_flex};
 
 pub use base64_decoder_tool::Base64DecoderTool;
 pub use base64_encoder_tool::Base64EncoderTool;
+pub use data_url_generator_tool::DataURLGeneratorTool;
 pub use json_formatter_tool::JSONFormatterTool;
 pub use json_viewer_tool::JSONViewerTool;
 pub use text_character_count_tool::TextCharacterCountTool;
