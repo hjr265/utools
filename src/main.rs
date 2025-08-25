@@ -47,6 +47,12 @@ impl Gallery {
                 vec![ToolContainer::panel::<DataURLGeneratorTool>(window, cx)],
             ),
             (
+                "Date/Time",
+                vec![ToolContainer::panel::<UnixTimestampConverterTool>(
+                    window, cx,
+                )],
+            ),
+            (
                 "JSON",
                 vec![
                     ToolContainer::panel::<JSONFormatterTool>(window, cx),
