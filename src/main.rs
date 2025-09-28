@@ -53,6 +53,13 @@ impl Gallery {
                 )],
             ),
             (
+                "HTML",
+                vec![
+                    ToolContainer::panel::<HTMLEncoderTool>(window, cx),
+                    ToolContainer::panel::<HTMLDecoderTool>(window, cx),
+                ],
+            ),
+            (
                 "JSON",
                 vec![
                     ToolContainer::panel::<JSONFormatterTool>(window, cx),
