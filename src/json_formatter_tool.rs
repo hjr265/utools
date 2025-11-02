@@ -53,7 +53,7 @@ impl JSONFormatterTool {
     fn on_format_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
         self.editor.update(cx, |state, cx| {
             let value = state.value();
-            let json_value: Value = serde_json::from_str(value).unwrap();
+            let json_value: Value = serde_json::from_str(value.as_str()).unwrap();
             let indent = b" ".repeat(self.indentation_size);
             let formatter = PrettyFormatter::with_indent(indent.as_slice());
             let mut writer = Vec::with_capacity(128);
@@ -67,7 +67,7 @@ impl JSONFormatterTool {
     fn on_compact_click(&mut self, _: &ClickEvent, window: &mut Window, cx: &mut Context<Self>) {
         self.editor.update(cx, |state, cx| {
             let value = state.value();
-            let json_value: Value = serde_json::from_str(value).unwrap();
+            let json_value: Value = serde_json::from_str(value.as_str()).unwrap();
             let compact_json = serde_json::to_string(&json_value).unwrap();
             state.set_value(SharedString::from(compact_json), window, cx);
         })

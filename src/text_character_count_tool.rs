@@ -37,7 +37,7 @@ impl TextCharacterCountTool {
                 .placeholder("Text")
         });
         let _subscriptions = vec![cx.subscribe(&editor, |this, _, e, cx| match e {
-            InputEvent::Change(_) => {
+            InputEvent::Change => {
                 if this.character_count > 0 {
                     this.character_count = 0;
                     cx.notify()

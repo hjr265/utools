@@ -26,7 +26,7 @@ impl Gallery {
     pub fn new(init_tool: Option<&str>, window: &mut Window, cx: &mut Context<Self>) -> Self {
         let search_input = cx.new(|cx| InputState::new(window, cx).placeholder("Search"));
         let _subscriptions = vec![cx.subscribe(&search_input, |this, _, e, cx| match e {
-            InputEvent::Change(_) => {
+            InputEvent::Change => {
                 this.active_group_index = Some(0);
                 this.active_index = Some(0);
                 cx.notify()
@@ -232,7 +232,6 @@ fn main() {
         gpui_component::init(cx);
         cx.activate(true);
         Theme::change(ThemeMode::Dark, None, cx);
-        Theme::global_mut(cx).set_default_dark();
         Theme::global_mut(cx).font_family = "Space Grotesk".into();
         Theme::global_mut(cx).font_size = px(17.);
         utools::create_new_window(
