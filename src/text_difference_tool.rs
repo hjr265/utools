@@ -2,9 +2,9 @@ use std::ops::Range;
 
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Action, App, AppContext, Axis, ClickEvent, ClipboardItem, Context, Entity, FocusHandle,
-    Focusable, HighlightStyle, Hsla, InteractiveElement, IntoElement, ParentElement, Render, Rgba,
-    SharedString, Styled, StyledText, Subscription, Window, div, px, rems,
+    Action, App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
+    HighlightStyle, Hsla, InteractiveElement, ParentElement, Render, Styled, StyledText, Window,
+    div, px, rems,
 };
 
 use gpui_component::button::DropdownButton;
@@ -14,7 +14,6 @@ use gpui_component::{
     h_flex,
     input::InputState,
     input::TextInput,
-    scroll::ScrollbarAxis,
     v_flex,
 };
 
@@ -112,7 +111,7 @@ impl TextDifferenceTool {
         cx.notify();
     }
 
-    fn on_back_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
+    fn on_back_click(&mut self, _: &ClickEvent, _: &mut Window, _: &mut Context<Self>) {
         self.difference_text = String::new();
         self.difference_highlights = Vec::new();
     }
