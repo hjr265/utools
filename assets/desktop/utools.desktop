@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=μTools
+Exec=/usr/bin/utools
+Icon=/usr/share/icons/hicolor/256x256/apps/utools.png
+Type=Application
+Categories=Utility;
