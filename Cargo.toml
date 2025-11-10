@@ -8,7 +8,7 @@ anyhow = "1"
 base64 = "0.22.1"
 chrono = "0.4.41"
 gpui = "0.2.2"
-gpui-component = { version = "0.3.0", features = [
+gpui-component = { version = "0.3.1", features = [
     "tree-sitter-languages",
 ] }
 html-escape = "0.2.13"
