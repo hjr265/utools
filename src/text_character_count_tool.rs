@@ -109,10 +109,10 @@ impl Render for TextCharacterCountTool {
 
         v_flex()
             .size_full()
-            .gap_1()
+            .gap_2()
             .child(
                 h_flex()
-                    .gap_0p5()
+                    .gap_2()
                     .child(
                         Button::new("count-button")
                             .label("Count")
