@@ -3,7 +3,7 @@ use gpui::{
     px, relative,
 };
 use gpui_component::{
-    ActiveTheme as _, Theme, ThemeMode, h_flex,
+    ActiveTheme as _, Theme, h_flex,
     input::{InputEvent, InputState, TextInput},
     resizable::{ResizableState, h_resizable, resizable_panel},
     sidebar::{Sidebar, SidebarGroup, SidebarMenu, SidebarMenuItem},
@@ -231,7 +231,7 @@ fn main() {
     app.run(|cx: &mut App| {
         gpui_component::init(cx);
         cx.activate(true);
-        Theme::change(ThemeMode::Dark, None, cx);
+        Theme::sync_system_appearance(None, cx);
         Theme::global_mut(cx).font_family = "Space Grotesk".into();
         Theme::global_mut(cx).font_size = px(17.);
         utools::create_new_window(
