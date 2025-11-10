@@ -7,6 +7,7 @@ mod html_encoder_tool;
 mod json_formatter_tool;
 mod json_viewer_tool;
 mod text_character_count_tool;
+mod text_difference_tool;
 mod title_bar;
 mod unix_timestamp_converter_tool;
 
@@ -27,6 +28,7 @@ pub use html_encoder_tool::HTMLEncoderTool;
 pub use json_formatter_tool::JSONFormatterTool;
 pub use json_viewer_tool::JSONViewerTool;
 pub use text_character_count_tool::TextCharacterCountTool;
+pub use text_difference_tool::TextDifferenceTool;
 pub use title_bar::AppTitleBar;
 pub use unix_timestamp_converter_tool::UnixTimestampConverterTool;
 

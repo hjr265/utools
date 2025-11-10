@@ -68,7 +68,10 @@ impl Gallery {
             ),
             (
                 "Text",
-                vec![ToolContainer::panel::<TextCharacterCountTool>(window, cx)],
+                vec![
+                    ToolContainer::panel::<TextCharacterCountTool>(window, cx),
+                    ToolContainer::panel::<TextDifferenceTool>(window, cx),
+                ],
             ),
         ];
         let mut this = Self {
