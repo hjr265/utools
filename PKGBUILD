@@ -31,6 +31,6 @@ package() {
         "$pkgdir/usr/share/applications/utools.desktop"
 
     # Icon
-    # install -Dm644 "assets/icons/utools.png" \
-    #     "$pkgdir/usr/share/icons/hicolor/256x256/apps/utools.png"
+    install -Dm644 "assets/icons/utools_256.png" \
+        "$pkgdir/usr/share/icons/hicolor/256x256/apps/utools.png"
 }

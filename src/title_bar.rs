@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use gpui::{
     AnyElement, App, Context, InteractiveElement as _, IntoElement, MouseButton,
-    ParentElement as _, Render, SharedString, Styled as _, Subscription, Window, div,
+    ParentElement as _, Render, SharedString, Styled as _, Subscription, Window, div, img, px,
 };
 use gpui_component::TitleBar;
 
@@ -67,7 +67,14 @@ impl Render for AppTitleBar {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         TitleBar::new()
             // Left side
-            .child(div().flex().items_center().child(self.title.clone()))
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .child(img("icons/utools.svg").size(px(24.)))
+                    .child(self.title.clone()),
+            )
             .child(
                 div()
                     .flex()
