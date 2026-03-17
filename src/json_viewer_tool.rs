@@ -1,6 +1,6 @@
 use gpui::{
     App, AppContext, ClickEvent, ClipboardItem, Context, Entity, FocusHandle, Focusable,
-    ParentElement, Render, Styled, Window, div, prelude::FluentBuilder, px,
+    ParentElement, Render, SharedString, Styled, Window, div, prelude::FluentBuilder, px,
 };
 
 use gpui_component::{
@@ -9,6 +9,7 @@ use gpui_component::{
     h_flex,
     highlighter::Language,
     input::{InputState, TabSize, TextInput},
+    ListItem, TreeItem, TreeState, tree,
 };
 
 use crate::Tool;
@@ -16,6 +17,7 @@ use crate::Tool;
 pub struct JSONViewerTool {
     focus_handle: FocusHandle,
     editor: Entity<InputState>,
+    tree_state: Entity<TreeState>,
     view_mode: bool,
 }
 
@@ -36,15 +38,26 @@ impl JSONViewerTool {
                 .default_value("")
                 .placeholder("JSON Source")
         });
+        let tree_state = cx.new(|cx| TreeState::new(cx));
 
         Self {
             focus_handle: cx.focus_handle(),
             editor,
+            tree_state,
             view_mode: false,
         }
     }
 
     fn on_view_click(&mut self, _: &ClickEvent, _: &mut Window, cx: &mut Context<Self>) {
+        if !self.view_mode {
+            let value = self.editor.read(cx).value().clone();
+            if let Ok(json) = serde_json::from_str::<serde_json::Value>(&value) {
+                let items = json_to_tree_items(&json, "root");
+                self.tree_state.update(cx, |state, cx| {
+                    state.set_items(items, cx);
+                });
+            }
+        }
         self.view_mode = !self.view_mode;
         cx.notify();
     }
@@ -64,6 +77,69 @@ impl JSONViewerTool {
     }
 }
 
+fn json_to_tree_items(value: &serde_json::Value, key: &str) -> Vec<TreeItem> {
+    match value {
+        serde_json::Value::Object(map) => {
+            let children: Vec<TreeItem> = map
+                .iter()
+                .map(|(k, v)| {
+                    let id = format!("{}/{}", key, k);
+                    match v {
+                        serde_json::Value::Object(_) | serde_json::Value::Array(_) => {
+                            let label = format_node_label(k, v);
+                            let child_items = json_to_tree_items(v, &id);
+                            TreeItem::new(id, label)
+                                .children(child_items)
+                                .expanded(true)
+                        }
+                        _ => TreeItem::new(id, format!("{}: {}", k, format_value(v))),
+                    }
+                })
+                .collect();
+            children
+        }
+        serde_json::Value::Array(arr) => {
+            let children: Vec<TreeItem> = arr
+                .iter()
+                .enumerate()
+                .map(|(i, v)| {
+                    let id = format!("{}[{}]", key, i);
+                    match v {
+                        serde_json::Value::Object(_) | serde_json::Value::Array(_) => {
+                            let label = format_node_label(&format!("[{}]", i), v);
+                            let child_items = json_to_tree_items(v, &id);
+                            TreeItem::new(id, label)
+                                .children(child_items)
+                                .expanded(true)
+                        }
+                        _ => TreeItem::new(id, format!("[{}]: {}", i, format_value(v))),
+                    }
+                })
+                .collect();
+            children
+        }
+        _ => vec![TreeItem::new(key.to_string(), format_value(value))],
+    }
+}
+
+fn format_node_label(key: &str, value: &serde_json::Value) -> String {
+    match value {
+        serde_json::Value::Object(map) => format!("{} {{{} keys}}", key, map.len()),
+        serde_json::Value::Array(arr) => format!("{} [{} items]", key, arr.len()),
+        _ => key.to_string(),
+    }
+}
+
+fn format_value(value: &serde_json::Value) -> String {
+    match value {
+        serde_json::Value::Null => "null".to_string(),
+        serde_json::Value::Bool(b) => b.to_string(),
+        serde_json::Value::Number(n) => n.to_string(),
+        serde_json::Value::String(s) => format!("\"{}\"", s),
+        _ => value.to_string(),
+    }
+}
+
 impl Tool for JSONViewerTool {
     fn title() -> &'static str {
         "JSON Viewer"
@@ -74,7 +150,7 @@ impl Tool for JSONViewerTool {
     }
 
     fn description() -> &'static str {
-        "JSON Viewer"
+        "Displays JSON as a collapsible tree."
     }
 
     fn new_view(window: &mut Window, cx: &mut App) -> Entity<impl Render + Focusable> {
@@ -122,7 +198,21 @@ impl Render for JSONViewerTool {
                             .on_click(cx.listener(Self::on_paste_click)),
                     ),
             )
-            .when(self.view_mode, |this| this)
+            .when(self.view_mode, |this| {
+                this.child(
+                    tree(&self.tree_state, |_ix, entry, _selected, _window, _cx| {
+                        ListItem::new(SharedString::from(entry.item().id.clone()))
+                            .px(px(16.) * entry.depth() as f32)
+                            .child(
+                                div()
+                                    .font_family("Space Mono")
+                                    .text_size(px(15.))
+                                    .child(entry.item().label.clone()),
+                            )
+                    })
+                    .h_full(),
+                )
+            })
             .when(!self.view_mode, |this| {
                 this.child(
                     TextInput::new(&self.editor)
@@ -134,5 +224,3 @@ impl Render for JSONViewerTool {
             })
     }
 }
-
-// fn make_tree(value: SharedString) {}
