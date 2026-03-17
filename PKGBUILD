@@ -15,8 +15,8 @@ sha256sums=()
 build() {
     cd "$srcdir/.."
 
-    # Assume built
-    # cargo build --release --frozen
+    CFLAGS="${CFLAGS/ -flto=auto/}" LDFLAGS="${LDFLAGS/ -flto=auto/}" \
+        cargo build --release --frozen
 }
 
 package() {
