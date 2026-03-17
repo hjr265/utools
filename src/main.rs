@@ -62,6 +62,8 @@ impl Gallery {
             (
                 "JSON",
                 vec![
+                    ToolContainer::panel::<JSONEncoderTool>(window, cx),
+                    ToolContainer::panel::<JSONDecoderTool>(window, cx),
                     ToolContainer::panel::<JSONFormatterTool>(window, cx),
                     ToolContainer::panel::<JSONViewerTool>(window, cx),
                 ],
