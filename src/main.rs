@@ -69,6 +69,13 @@ impl Gallery {
                 ],
             ),
             (
+                "URL",
+                vec![
+                    ToolContainer::panel::<URLEncoderTool>(window, cx),
+                    ToolContainer::panel::<URLDecoderTool>(window, cx),
+                ],
+            ),
+            (
                 "Text",
                 vec![
                     ToolContainer::panel::<TextCharacterCountTool>(window, cx),

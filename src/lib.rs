@@ -12,6 +12,8 @@ mod text_character_count_tool;
 mod text_difference_tool;
 mod title_bar;
 mod unix_timestamp_converter_tool;
+mod url_decoder_tool;
+mod url_encoder_tool;
 
 pub use assets::Assets;
 use gpui::{
@@ -35,6 +37,8 @@ pub use text_character_count_tool::TextCharacterCountTool;
 pub use text_difference_tool::TextDifferenceTool;
 pub use title_bar::AppTitleBar;
 pub use unix_timestamp_converter_tool::UnixTimestampConverterTool;
+pub use url_decoder_tool::URLDecoderTool;
+pub use url_encoder_tool::URLEncoderTool;
 
 pub fn create_new_window<F, E>(title: &str, crate_view_fn: F, cx: &mut App)
 where
